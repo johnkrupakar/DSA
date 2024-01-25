@@ -1,49 +1,49 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
         int n = nums.length;
-        int lb = lowerBound(nums, n, target);
-        if (lb == n || nums[lb] != target) {
-            return new int[]{-1, -1};
-        }
-        int ub = upperBound(nums, n, target);
-        return new int[]{lb, ub - 1};
+        int first = firstOccurrence(nums, n, target);
+        if (first == -1) return new int[] { -1, -1};
+        int last = lastOccurrence(nums, n, target);
+        return new int[] {first, last};
     }
     
-public static int lowerBound(int[] arr, int n, int x) {
-        int low = 0;
-        int high = n - 1;
-        int ans = n;
+public static int firstOccurrence(int[] arr, int n, int k) {
+        int low = 0, high = n - 1;
+        int first = -1;
 
         while (low <= high) {
             int mid = (low + high) / 2;
-
-            if (arr[mid] >= x) {
-                ans = mid;
+            // maybe an answer
+            if (arr[mid] == k) {
+                first = mid;
                 // look for smaller index on the left
                 high = mid - 1;
+            } else if (arr[mid] < k) {
+                low = mid + 1; // look on the right
             } else {
-                low = mid + 1;
+                high = mid - 1; // look on the left
             }
         }
-        return ans;
+        return first;
     }
     
-    public static int upperBound(int[] arr, int n, int x) {
-        int low = 0;
-        int high = n - 1;
-        int ans = n;
+    public static int lastOccurrence(int[] arr, int n, int k) {
+        int low = 0, high = n - 1;
+        int last = -1;
 
         while (low <= high) {
             int mid = (low + high) / 2;
-
-            if (arr[mid] > x) {
-                ans = mid;
-                // look for smaller index on the left
-                high = mid - 1;
-            } else {
+            // maybe an answer
+            if (arr[mid] == k) {
+                last = mid;
+                // look for larger index on the right
                 low = mid + 1;
+            } else if (arr[mid] < k) {
+                low = mid + 1; // look on the right
+            } else {
+                high = mid - 1; // look on the left
             }
         }
-        return ans;
+        return last;
     }
 }
