@@ -4,29 +4,21 @@ class Solution {
         int n = matrix.length;
         int m = matrix[0].length;
 
-        for (int i = 0; i < n; i++) {
-            // Check if the target is in this row
-            if (matrix[i][0] <= target && target <= matrix[i][m - 1]) {
-                return binarySearch(matrix[i], target);
-            }
-        }
-        return false;
-    }
-
-    public static boolean binarySearch(int[] arr, int target) {
-        int n = arr.length;
+        // Apply binary search in O(n*m)
         int low = 0;
-        int high = n - 1;
+        int high = n * m - 1;
 
         while (low <= high) {
             int mid = (low + high) / 2;
-
-            if (arr[mid] == target) {
+            // Get the x and y coordinates
+            int row = mid / m;
+            int col = mid % m;
+            if (matrix[row][col] == target) {
                 return true;
-            } else if (arr[mid] > target) {
-                high = mid - 1;
-            } else {
+            } else if (matrix[row][col] < target) {
                 low = mid + 1;
+            } else {
+                high = mid - 1;
             }
         }
         return false;
