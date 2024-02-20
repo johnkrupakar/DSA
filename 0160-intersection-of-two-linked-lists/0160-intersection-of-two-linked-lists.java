@@ -11,42 +11,14 @@
  */
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        int diff = getDifference(headA,headB);
-        //if diff is negative move the head2 and until diff becomes 0
-        if(diff < 0){
-            while(diff++ != 0){
-                headB = headB.next;
-            }
+        ListNode d1 = headA;
+        ListNode d2 = headB;
+    
+        while(d1 != d2) {
+            d1 = d1 == null? headB:d1.next; //if d1 becomes null asign d1 to secondHead or else move ahead
+            d2 = d2 == null? headA:d2.next;  //if d2 becomes null asign d2 to FirstHead or else move ahead
         }
-        else{ //if diff is positive move the head1 until diff becomes 0 
-            while(diff-- != 0){
-                headA = headA.next;
-            }
-        }
-        //now move both pointers simultaneouls
-        while(headA != null){
-            if(headA == headB){
-                return headA;
-            }
-            headB = headB.next;
-            headA = headA.next;
-        }
-        return null;
-    }
-    public static int getDifference(ListNode head1, ListNode head2){
-        int length1 = 0;
-        int length2 = 0;
-
-        while(head1 != null || head2 != null){
-            if(head1 != null){
-                ++length1;
-                head1 = head1.next;
-            }
-            if(head2 != null){
-                ++length2;
-                head2 = head2.next;
-            }
-        }
-        return length1 - length2; //if difference is neg-> length of list2 > length of list1 else vice-versa
+    
+        return d1;
     }
 }
