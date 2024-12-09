@@ -11,7 +11,7 @@ class Solution {
             while(hm.size()>2){
                 int leftValue=fruits[l];
                 
-                hm.put(lval,hm.get(leftValue)-1);
+                hm.put(leftValue,hm.get(leftValue)-1);
                 if(hm.get(leftValue)==0){
                     hm.remove(leftValue);
                 }
